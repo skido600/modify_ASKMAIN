@@ -1,0 +1,72 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Poppins", sans-serif;
+
+  font-style: normal;
+}
+
+.blur_meme {
+  top: 0;
+
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  background-color: #06141799;
+
+  align-items: center;
+
+  background-color: transparent;
+}
+
+.reply_main {
+  background-color: #b9b7bd;
+  color: black;
+  margin-bottom: 1rem;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-top-left-radius: 10px;
+  padding: 20px;
+}
+
+.loader {
+  width: 60px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side, #f7f3f3 90%, #f0c9c900);
+  background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
+  background-size: calc(100% / 3) 50%;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+  20% {
+    background-position: 0% 0%, 50% 50%, 100% 50%;
+  }
+  40% {
+    background-position: 0% 100%, 50% 0%, 100% 50%;
+  }
+  60% {
+    background-position: 0% 50%, 50% 100%, 100% 0%;
+  }
+  80% {
+    background-position: 0% 50%, 50% 50%, 100% 100%;
+  }
+}
+
+/* Add this to your main CSS file, typically 'src/index.css' or 'src/globals.css' */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+  margin-top: 1rem;
+}
+
+::-webkit-scrollbar-track {
+  background: #061417;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #061417;
+  border-radius: 10px;
+  border: 2px solid transparent;
+}
