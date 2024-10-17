@@ -51,9 +51,10 @@ const MyAi: React.FC = () => {
       ]);
     } catch (error) {
       console.error("Error getting AI response:", error);
+      console.error("Error getting AI response:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { type: "ai", text: "Sorry, something went wrong!" },
+        { type: "ai", text: "Sorry, something went wrong!!" },
       ]);
     } finally {
       setLoading(false);
