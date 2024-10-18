@@ -2,7 +2,7 @@ import logo from "../assets/logo.png";
 
 import { IoIosSend } from "react-icons/io";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Loader from "./Helper/Loader";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdDeleteSweep } from "react-icons/md";
@@ -15,14 +15,18 @@ const MyAi: React.FC = () => {
     { type: "user" | "ai"; text: string }[]
   >([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const inputRef = useRef<HTMLInputElement>(null);
+
+  const inputRef = useRef<HTMLTextAreaElement>(null);
+  const divRef = useRef<HTMLDivElement>(null);
+  const [Divheight, setDivheight] = useState<number>(0);
+  const [scroll, setSrcoll] = useState<number>(0);
   const [click, setclick] = useState<boolean>(false);
   const [model, setmodel] = useState<boolean>(false);
   const [clear, setclear] = useState<boolean>(false);
   const getAi = async (prompt: string) => {
     setLoading(true);
     const API_KEY = import.meta.env.VITE_API_KEY;
-    console.log(API_KEY);
+
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
@@ -41,10 +45,11 @@ const MyAi: React.FC = () => {
 
       for await (const chunk of result.stream) {
         let chunkText = await chunk.text();
+        // const formattedText = formatResponse(chunkText);
         chunks.push(chunkText);
       }
 
-      // Update messages state with AI response
+      // Update  AI response
       setMessages((prevMessages) => [
         ...prevMessages,
         { type: "ai", text: chunks.join("") },
@@ -74,7 +79,51 @@ const MyAi: React.FC = () => {
       }
     }
   };
+  // const formatTagsOnly = (text: string) => {
+  //   return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  // };
+  // const formatResponse = (text: string) => {
+  //   // Escape HTML tags first
+  //   text = formatTagsOnly(text);
 
+  //   // Replace spaces with &nbsp;
+  //   text = text.replace(/ /g, "&nbsp;");
+
+  //   // Replace double line breaks (for paragraphs) with <br />
+  //   text = text.replace(/\n\s*\n/g, "<br />");
+
+  //   // Format for markdown-like syntax
+  //   text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+  //   text = text.replace(/`([^`]+)`/g, "<code>$1</code><br />");
+  //   text = text.replace(/``\n?([\s\S]*?)\n?``/g, "<code>$1</code><br />");
+  //   text = text.replace(/^\s*\*\s+(.*)$/gm, "<br /><li>$1</li>");
+  //   text = text.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>");
+  //   text = text.replace(/\n/g, "<br />"); // Add line breaks
+  //   return text;
+  // };
+
+  //thinking logic
+  // useEffect(() => {
+  //   //working with offsetheight
+  //   if (divRef.current) {
+  //     setDivheight(divRef.current.offsetHeight);
+  //   }
+  //   const handlescroll = () => {
+  //     const srcollY = window.scrollY;
+  //     setSrcoll(srcollY);
+
+  //     if (scroll > Divheight) {
+  //       console.log("user scrooled");
+  //     }
+  //     window.addEventListener("scroll", handlescroll);
+
+  //     return () => {
+  //       window.removeEventListener("scroll", handlescroll);
+  //     };
+  //   };
+  // }, [Divheight]);
+
+  console.log(Divheight);
   const handleclick = () => {
     setclick(!click);
   };
@@ -85,7 +134,7 @@ const MyAi: React.FC = () => {
     setMessages([]);
     setclear(!clear);
   };
-  console.log(click);
+
   return (
     <main className="bg-[#061417] fixed top-0 bottom-0 right-0 left-0  ">
       <nav className="flex items-center justify-between mx-4 py-2">
@@ -158,7 +207,7 @@ const MyAi: React.FC = () => {
       )}
 
       <main className="flex justify-between flex-col h-[calc(100vh-6rem)]">
-        <div className=" m-2 h-[70vh] overflow-y-auto">
+        <div ref={divRef} className=" m-2 h-[70vh] overflow-y-auto">
           {messages.map((message, index) => (
             <div
               key={index}
@@ -167,13 +216,13 @@ const MyAi: React.FC = () => {
               } mb-2`}
             >
               <div
-                className={`p-4 w-[300px] md:w-[400px] ${
+                className={`p-4 w-[300px] md:w-[400px] flex flex-wrap break-words overflow-wrap  break-normal break-all break-word ${
                   message.type === "user"
-                    ? "bg-slate-600 text-white rounded-tl-[10px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-0"
+                    ? "bg-slate-600   text-white rounded-tl-[10px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-0"
                     : "flex items-start text-white rounded-tl-[10px] rounded-tr-[10px] rounded-br-[10px] rounded-bl-0"
                 }`}
               >
-                {/* Add logo to AI messages */}
+                {/* Add logo*/}
                 {message.type === "ai" && (
                   <div className="flex items-start gap-2">
                     <img
@@ -181,10 +230,10 @@ const MyAi: React.FC = () => {
                       alt="AI Logo"
                       className="w-[30px] h-[30px] rounded-full"
                     />
-                    <span className="break-words">{message.text}</span>
+                    <p className="break-words">{message.text}</p>
                   </div>
                 )}
-                {message.type === "user" && <span>{message.text}</span>}
+                {message.type === "user" && <p className="">{message.text}</p>}
               </div>
             </div>
           ))}
@@ -199,12 +248,12 @@ const MyAi: React.FC = () => {
       </main>
 
       <div className="flex fixed items-center z-0 justify-center bottom-0 m-2 right-0 left-0 gap-2">
-        <input
+        <textarea
           ref={inputRef}
           placeholder="Write a message"
           className="bg-black w-full text-white p-4 rounded-full placeholder:outline-none focus:outline-none resize-none h-[4rem]"
           onKeyPress={(e) => e.key === "Enter" && handleSubmit()}
-        />
+        ></textarea>
         <div className="rounded-full p-2 bg-black">
           <IoIosSend
             size={40}
