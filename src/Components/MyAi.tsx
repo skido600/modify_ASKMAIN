@@ -18,8 +18,8 @@ const MyAi: React.FC = () => {
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  const [Divheight, setDivheight] = useState<number>(0);
-  const [scroll, setSrcoll] = useState<number>(0);
+  // const [Divheight, setDivheight] = useState<number>(0);
+  // const [scroll, setSrcoll] = useState<number>(0);
   const [click, setclick] = useState<boolean>(false);
   const [model, setmodel] = useState<boolean>(false);
   const [clear, setclear] = useState<boolean>(false);
@@ -45,7 +45,7 @@ const MyAi: React.FC = () => {
 
       for await (const chunk of result.stream) {
         let chunkText = await chunk.text();
-        // const formattedText = formatResponse(chunkText);
+        chunkText = formatResponse(chunkText);
         chunks.push(chunkText);
       }
 
@@ -79,6 +79,41 @@ const MyAi: React.FC = () => {
       }
     }
   };
+
+  const formatTagsOnly = (text: string) => {
+    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  };
+
+  const formatResponse = (text: string) => {
+    // Escape HTML tags first
+    text = formatTagsOnly(text);
+
+    // Replace spaces with &nbsp;
+    text = text.replace(/ /g, "&nbsp;");
+
+    // Replace double line breaks (for paragraphs) with <br />
+    text = text.replace(/\n\s*\n/g, "<br />");
+
+    // Format for markdown-like syntax
+    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
+    text = text.replace(/`([^`]+)`/g, "<code>$1</code><br />");
+    text = text.replace(/``\n?([\s\S]*?)\n?``/g, "<code>$1</code><br />");
+    text = text.replace(/^\s*\*\s+(.*)$/gm, "<br /><li>$1</li>");
+    text = text.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>");
+    // Italics ? Just leave as span
+    text = text.replace(/\*(.*?)\*/g, "<span>$1</span>");
+    text = text.replace(/\n/g, "<br />"); // Add line breaks
+    return text;
+  };
+
+  const formatUserMessage = (text: string) => {
+    // Replace spaces with &nbsp;
+    text = text.replace(/ /g, "&nbsp;");
+    // Replace new lines with <br />
+    text = text.replace(/\n/g, "<br />");
+    return text;
+  };
+
   // const formatTagsOnly = (text: string) => {
   //   return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
   // };
@@ -123,7 +158,7 @@ const MyAi: React.FC = () => {
   //   };
   // }, [Divheight]);
 
-  console.log(Divheight);
+  // console.log(Divheight);
   const handleclick = () => {
     setclick(!click);
   };
@@ -230,10 +265,12 @@ const MyAi: React.FC = () => {
                       alt="AI Logo"
                       className="w-[30px] h-[30px] rounded-full"
                     />
-                    <p className="break-words">{message.text}</p>
+                    <p className="break-words text-[13px]">{message.text}</p>
                   </div>
                 )}
-                {message.type === "user" && <p className="">{message.text}</p>}
+                {message.type === "user" && (
+                  <p className="text-[13px]">{message.text}</p>
+                )}
               </div>
             </div>
           ))}

@@ -55,7 +55,7 @@ body {
 }
 
 /* Add this to your main CSS file, typically 'src/index.css' or 'src/globals.css' */
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
   margin-top: 1rem;
@@ -69,4 +69,4 @@ body {
   background-color: #061417;
   border-radius: 10px;
   border: 2px solid transparent;
-}
+} */
