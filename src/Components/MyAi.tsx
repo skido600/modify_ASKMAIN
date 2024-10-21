@@ -170,23 +170,27 @@ const MyAi: React.FC = () => {
                 message.type === "user" ? "justify-end" : "justify-start"
               } mb-2`}
             >
+              {/* flex flex-wrap break-words overflow-wrap break-normal break-all */}
               <div
-                className={`p-4 w-[300px] md:w-[400px] flex flex-wrap break-words overflow-wrap  break-normal break-all break-word ${
+                className={`p-4 w-[300px] md:w-[400px]  break-words   ${
                   message.type === "user"
                     ? "bg-slate-600   text-white rounded-tl-[10px] rounded-tr-[10px] rounded-bl-[10px] rounded-br-0"
-                    : "flex items-start text-white rounded-tl-[10px] rounded-tr-[10px] rounded-br-[10px] rounded-bl-0"
+                    : "flex items-start  text-white rounded-tl-[10px] rounded-tr-[10px] rounded-br-[10px] rounded-bl-0"
                 }`}
+                style={{ wordBreak: "break-word", whiteSpace: "pre-wrap" }}
               >
                 {/* Add logo*/}
                 {message.type === "ai" && (
-                  <div className="flex items-start gap-2">
+                  <div className="flex  items-start gap-2">
                     <img
                       src={logo}
                       alt="AI Logo"
                       className="w-[30px] h-[30px] rounded-full"
                     />
-                    <div className="text-[13px] ">
-                      <ReactMarkdown>{message.text}</ReactMarkdown>
+                    <div className="text-[13px]   ">
+                      <p>
+                        <ReactMarkdown>{message.text}</ReactMarkdown>
+                      </p>
                     </div>
                   </div>
                 )}
