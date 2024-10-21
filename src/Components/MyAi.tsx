@@ -1,5 +1,5 @@
 import logo from "../assets/logo.png";
-
+import ReactMarkdown from "react-markdown";
 import { IoIosSend } from "react-icons/io";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { useEffect, useRef, useState } from "react";
@@ -45,7 +45,7 @@ const MyAi: React.FC = () => {
 
       for await (const chunk of result.stream) {
         let chunkText = await chunk.text();
-        chunkText = formatResponse(chunkText);
+
         chunks.push(chunkText);
       }
 
@@ -78,40 +78,6 @@ const MyAi: React.FC = () => {
         inputRef.current.value = "";
       }
     }
-  };
-
-  const formatTagsOnly = (text: string) => {
-    return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  };
-
-  const formatResponse = (text: string) => {
-    // Escape HTML tags first
-    text = formatTagsOnly(text);
-
-    // Replace spaces with &nbsp;
-    text = text.replace(/ /g, "&nbsp;");
-
-    // Replace double line breaks (for paragraphs) with <br />
-    text = text.replace(/\n\s*\n/g, "<br />");
-
-    // Format for markdown-like syntax
-    text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-    text = text.replace(/`([^`]+)`/g, "<code>$1</code><br />");
-    text = text.replace(/``\n?([\s\S]*?)\n?``/g, "<code>$1</code><br />");
-    text = text.replace(/^\s*\*\s+(.*)$/gm, "<br /><li>$1</li>");
-    text = text.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>");
-    // Italics ? Just leave as span
-    text = text.replace(/\*(.*?)\*/g, "<span>$1</span>");
-    text = text.replace(/\n/g, "<br />"); // Add line breaks
-    return text;
-  };
-
-  const formatUserMessage = (text: string) => {
-    // Replace spaces with &nbsp;
-    text = text.replace(/ /g, "&nbsp;");
-    // Replace new lines with <br />
-    text = text.replace(/\n/g, "<br />");
-    return text;
   };
 
   // const formatTagsOnly = (text: string) => {
@@ -265,7 +231,9 @@ const MyAi: React.FC = () => {
                       alt="AI Logo"
                       className="w-[30px] h-[30px] rounded-full"
                     />
-                    <p className="break-words text-[13px]">{message.text}</p>
+                    <div className="text-[13px]">
+                      <ReactMarkdown>{message.text}</ReactMarkdown>
+                    </div>
                   </div>
                 )}
                 {message.type === "user" && (
