@@ -2,7 +2,7 @@ import logo from "../assets/logo.png";
 import ReactMarkdown from "react-markdown";
 import { IoIosSend } from "react-icons/io";
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import Loader from "./Helper/Loader";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 import { MdDeleteSweep } from "react-icons/md";
@@ -18,8 +18,7 @@ const MyAi: React.FC = () => {
 
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
-  // const [Divheight, setDivheight] = useState<number>(0);
-  // const [scroll, setSrcoll] = useState<number>(0);
+
   const [click, setclick] = useState<boolean>(false);
   const [model, setmodel] = useState<boolean>(false);
   const [clear, setclear] = useState<boolean>(false);
@@ -80,51 +79,6 @@ const MyAi: React.FC = () => {
     }
   };
 
-  // const formatTagsOnly = (text: string) => {
-  //   return text.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  // };
-  // const formatResponse = (text: string) => {
-  //   // Escape HTML tags first
-  //   text = formatTagsOnly(text);
-
-  //   // Replace spaces with &nbsp;
-  //   text = text.replace(/ /g, "&nbsp;");
-
-  //   // Replace double line breaks (for paragraphs) with <br />
-  //   text = text.replace(/\n\s*\n/g, "<br />");
-
-  //   // Format for markdown-like syntax
-  //   text = text.replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>");
-  //   text = text.replace(/`([^`]+)`/g, "<code>$1</code><br />");
-  //   text = text.replace(/``\n?([\s\S]*?)\n?``/g, "<code>$1</code><br />");
-  //   text = text.replace(/^\s*\*\s+(.*)$/gm, "<br /><li>$1</li>");
-  //   text = text.replace(/(<li>.*<\/li>)/g, "<ul>$1</ul>");
-  //   text = text.replace(/\n/g, "<br />"); // Add line breaks
-  //   return text;
-  // };
-
-  //thinking logic
-  // useEffect(() => {
-  //   //working with offsetheight
-  //   if (divRef.current) {
-  //     setDivheight(divRef.current.offsetHeight);
-  //   }
-  //   const handlescroll = () => {
-  //     const srcollY = window.scrollY;
-  //     setSrcoll(srcollY);
-
-  //     if (scroll > Divheight) {
-  //       console.log("user scrooled");
-  //     }
-  //     window.addEventListener("scroll", handlescroll);
-
-  //     return () => {
-  //       window.removeEventListener("scroll", handlescroll);
-  //     };
-  //   };
-  // }, [Divheight]);
-
-  // console.log(Divheight);
   const handleclick = () => {
     setclick(!click);
   };
@@ -231,7 +185,7 @@ const MyAi: React.FC = () => {
                       alt="AI Logo"
                       className="w-[30px] h-[30px] rounded-full"
                     />
-                    <div className="text-[13px]">
+                    <div className="text-[13px] ">
                       <ReactMarkdown>{message.text}</ReactMarkdown>
                     </div>
                   </div>
