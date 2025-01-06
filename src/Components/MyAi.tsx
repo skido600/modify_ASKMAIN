@@ -26,6 +26,7 @@ const MyAi: React.FC = () => {
     setLoading(true);
     const API_KEY = import.meta.env.VITE_API_KEY;
 
+    console.log(`API KEY ${API_KEY}`);
     const genAI = new GoogleGenerativeAI(API_KEY);
     const model = genAI.getGenerativeModel({
       model: "gemini-1.5-flash",
@@ -43,7 +44,7 @@ const MyAi: React.FC = () => {
       const chunks: string[] = [];
 
       for await (const chunk of result.stream) {
-        let chunkText = await chunk.text();
+        const chunkText = await chunk.text();
 
         chunks.push(chunkText);
       }
@@ -58,7 +59,7 @@ const MyAi: React.FC = () => {
       console.error("Error getting AI response:", error);
       setMessages((prevMessages) => [
         ...prevMessages,
-        { type: "ai", text: "Sorry, something went wrong!!" },
+        { type: "ai", text: `Sorry, something went wrong!!` },
       ]);
     } finally {
       setLoading(false);
@@ -188,9 +189,7 @@ const MyAi: React.FC = () => {
                       className="w-[30px] h-[30px] rounded-full"
                     />
                     <div className="text-[13px]   ">
-                      <p>
-                        <ReactMarkdown>{message.text}</ReactMarkdown>
-                      </p>
+                      <ReactMarkdown>{message.text}</ReactMarkdown>
                     </div>
                   </div>
                 )}
