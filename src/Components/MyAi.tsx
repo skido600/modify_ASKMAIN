@@ -49,7 +49,7 @@ const MyAi: React.FC = () => {
         chunks.push(chunkText);
       }
 
-      // Update  AI response
+      //  AI response
       setMessages((prevMessages) => [
         ...prevMessages,
         { type: "ai", text: chunks.join("") },
