@@ -5,11 +5,13 @@
 
 body {
   font-family: "Poppins", sans-serif;
-
-  font-style: normal;
 }
 
-.blur_meme {
+* {
+  outline: none;
+  text-decoration: none;
+}
+/* .blur_meme {
   top: 0;
 
   backdrop-filter: blur(5px);
@@ -19,9 +21,9 @@ body {
   align-items: center;
 
   background-color: transparent;
-}
+} */
 
-.reply_main {
+/* .reply_main {
   background-color: #b9b7bd;
   color: black;
   margin-bottom: 1rem;
@@ -29,17 +31,17 @@ body {
   border-bottom-right-radius: 10px;
   border-top-left-radius: 10px;
   padding: 20px;
-}
+} */
 
-.loader {
+/* .loader {
   width: 60px;
   aspect-ratio: 2;
   --_g: no-repeat radial-gradient(circle closest-side, #f7f3f3 90%, #f0c9c900);
   background: var(--_g) 0% 50%, var(--_g) 50% 50%, var(--_g) 100% 50%;
   background-size: calc(100% / 3) 50%;
   animation: l3 1s infinite linear;
-}
-@keyframes l3 {
+} */
+/* @keyframes l3 {
   20% {
     background-position: 0% 0%, 50% 50%, 100% 50%;
   }
@@ -52,7 +54,7 @@ body {
   80% {
     background-position: 0% 50%, 50% 50%, 100% 100%;
   }
-}
+} */
 
 /* Add this to your main CSS file, typically 'src/index.css' or 'src/globals.css' */
 /* ::-webkit-scrollbar {
@@ -69,4 +71,23 @@ body {
   background-color: #061417;
   border-radius: 10px;
   border: 2px solid transparent;
+} */
+
+/* .prose {
+  max-width: 100%;
+  white-space: normal;
+}
+
+.prose p {
+  margin: 0.5em 0;
+}
+
+.prose ul {
+  padding-left: 1.5em;
+}
+
+.prose code {
+  background-color: #374151;
+  padding: 0.2em 0.4em;
+  border-radius: 4px;
 } */
