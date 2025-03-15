@@ -1,4 +1,3 @@
-import React from "react";
 import { HiOutlineDotsVertical } from "react-icons/hi";
 interface NavProps {
   handleclick: () => void;

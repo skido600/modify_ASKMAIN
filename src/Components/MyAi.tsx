@@ -38,7 +38,7 @@ const MyAi: React.FC = () => {
     { type: "user" | "ai"; text: string }[]
   >([]);
   const [loading, setLoading] = useState<boolean>(false);
-  const today = new Date();
+  // const today = new Date();
   // const formattedDate = today.toDateString();
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const divRef = useRef<HTMLDivElement>(null);
