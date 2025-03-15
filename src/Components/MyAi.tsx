@@ -118,7 +118,7 @@ const MyAi: React.FC = () => {
       {model && <Model handleModel={() => setModel(!model)} />}
 
       <div className="flex flex-col h-[calc(100vh-6rem)]">
-        <div ref={divRef} className="m-2 h-[70vh] overflow-y-auto">
+        <div ref={divRef} className="m-2 h-[70vh] overflow-y-hidden">
           {messages.map((message, index) => (
             <div
               key={index}
